@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="aabc9a7f-7dd7-4380-bcc1-52c57765354b" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<flow name="asyncFlow" doc:id="14dc7cda-475c-4232-bbaa-bc2a5755484b" >
+		<http:listener doc:name="Listener" doc:id="c2b6f6d9-3b17-484e-b505-6547d6718b6d" config-ref="HTTP_Listener_config" path="/async"/>
+		<set-payload value='#["main flow"]' doc:name="Set Payload" doc:id="2b88fcb6-138f-4041-8377-504bdae84f7c" />
+		<logger level="INFO" doc:name="Logger" doc:id="c15b8d62-d653-45c3-b729-dc08a0111cd9" message="#[payload]"/>
+		<async doc:name="Async" doc:id="dde32996-7e81-4909-8590-bb2c8af0c0e8" >
+			<set-payload value='#["async flow"]' doc:name="Set Payload" doc:id="aff3aa70-1a91-488c-bc4a-a43ff2f7991e" />
+			<logger level="INFO" doc:name="Logger" doc:id="521928bd-1eb4-436c-8be7-54f0ce4b6408" message="#[payload]"/>
+		</async>
+		<logger level="INFO" doc:name="Logger" doc:id="bfc52166-671f-4031-b336-249fb995d2b2" message="#[payload]"/>
+	</flow>
+</mule>
